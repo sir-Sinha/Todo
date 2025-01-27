@@ -27,6 +27,7 @@ fun Application.module() {
     }
 
     DatabaseFactory.init()
+    Client.jedis
 
     configureSerialization()
     configureSecurity()
