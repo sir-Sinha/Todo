@@ -54,6 +54,12 @@ data class JsonTodoList(
     val status: String,
     val todo : List<JsonTodo>
 )
+
+@Serializable
+data class JsonTodoList2(
+    val status: String,
+    val todo : JsonTodo
+)
 @Serializable
 data class JsonTodoDate(
     val email: String,
