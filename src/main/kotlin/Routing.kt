@@ -1,5 +1,8 @@
 package com.example
 
+import Cache.CacheReposImp
+import Interface.TodoReposImp
+import Interface.UserReposImp
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.http.*
@@ -13,16 +16,17 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.sql.Connection
 import java.sql.DriverManager
-import connection.dbOperation
+import connection.*
 import routes.*
 import db.*
 
 fun Application.configureRouting() {
     routing {
-        val dbObject = dbOperation()
-
-        UserRoutes(dbObject)
-        TodoRoutes(dbObject)
+        val todoObject = TodoReposImp()
+        val userObject = UserReposImp()
+        val cacheObject = CacheReposImp()
+        UserRoutes(userObject , cacheObject)
+        TodoRoutes(todoObject , userObject , cacheObject)
 
 
 
