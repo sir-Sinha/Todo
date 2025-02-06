@@ -1,8 +1,9 @@
 package db
 
-
+// TODO : Package naming should be better
 import kotlinx.serialization.Serializable
 
+// FIXME: Redundant POJO Classes
 @Serializable
 data class ToDo(
     val email: String,

@@ -12,10 +12,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
-
 object DatabaseFactory {
     fun init()
     {
+        // FIXME: Read Config Values from properties file
         Database.connect(
             "jdbc:postgresql://ep-purple-water-a5lenduw.us-east-2.aws.neon.tech/Test_DB",
             user = "Test_DB_owner",

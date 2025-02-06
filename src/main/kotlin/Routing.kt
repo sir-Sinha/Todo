@@ -22,6 +22,8 @@ import db.*
 
 fun Application.configureRouting() {
     routing {
+        // FIXME: Instead of using of concrete class inject interfaces of service classes
+        // FIXME: Dependency Injection is not done properly
         val todoObject = TodoReposImp()
         val userObject = UserReposImp()
         val cacheObject = CacheReposImp()

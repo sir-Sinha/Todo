@@ -6,6 +6,7 @@ import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 
+// FIXME: Create separate POJO classes for each
 @Serializable
 data class User(
     val email:String,
@@ -26,7 +27,7 @@ data class UserDetails(
     val name:String,
     val password:String,
 )
-
+// FIXME: POJO Class naming convention should be sensible
 @Serializable
 data class  JsonResponse(
     val status : String,

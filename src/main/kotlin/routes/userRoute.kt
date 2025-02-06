@@ -13,7 +13,16 @@ import io.ktor.server.routing.*
 
 
 
-
+/**
+ *
+ * Feedback:
+ * 1. Dependency Injection is missing
+ * 2. Business logic should be kept under Service Classes and injected in HTTP class vai interface to maintain loose coupling
+ * 3. Exception handling need to be improved and using custom exceptions with better messaging
+ * 4. Data storage strategy is wrong and order is not correct.
+ * 5. Database operations should be performed under transactional
+ * 6. Authentication logic written but not used for api requests
+ * **/
 fun Route.UserRoutes(userObject:UserReposImp , cacheObject : CacheReposImp){
 
     route("/user") {
@@ -23,6 +32,10 @@ fun Route.UserRoutes(userObject:UserReposImp , cacheObject : CacheReposImp){
             try {
                 val userInput = call.receive<User>()
 
+
+                // FIXME: This entire logic should be moved in service classes
+
+                // FIXME: Move business logic in service classes(Like custom validation)
                 if (userInput.email == null || userInput.name == null || userInput.password == null) {
                     call.respond(HttpStatusCode.BadRequest, JsonErrorResponse("Fail to create","Please Provide all information"))
                     return@post
@@ -37,12 +50,14 @@ fun Route.UserRoutes(userObject:UserReposImp , cacheObject : CacheReposImp){
                     call.respond(HttpStatusCode.BadRequest, JsonErrorResponse("Fail", "${userInput.email} already present"))
                     return@post
                 }
+                // FIXME: first store the data in persistent storage then store in cache
                 cacheObject.hset("allEmail", userInput.email, userInput.password)
 
-
+                // TODO: instead of directly constructing the object use mappers/helpers classes for converting object from one form to another form
                 userObject.createUser(User(userInput.email, userInput.name, userInput.password))
                 call.respond(HttpStatusCode.Created, JsonResponse("success", User(userInput.email, userInput.name, userInput.password)))
             } catch (ex: Exception) {
+                // TODO: Do Custom exception handling instead of throwing generic exceptions
                 call.respond(HttpStatusCode.InternalServerError, JsonErrorResponse("Fail", "${ex.message}"))
             }
         }

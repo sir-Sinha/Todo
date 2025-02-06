@@ -6,13 +6,16 @@ import db.userTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
+//FIXME: All DB operations should be performed transactional
 class UserReposImp : UserRepos {
+
     override fun isValidGmail(email: String): Boolean {
         val regex = Regex("^[a-zA-Z0-9_.+-]+@gmail\\.com$")
         return regex.matches(email)
     }
 
     override suspend fun createUser(user: User){
+        //FIXME: database actions should transactional
         dbQuery {
             userTable.insert {
                 it[email] = user.email
@@ -22,6 +25,7 @@ class UserReposImp : UserRepos {
         }
     }
 
+    // TODO: Search and Delete user by their Id not not after making Id as Primary Key
     override suspend fun deleteUser(email:String,password:String) =
         dbQuery {
 //            deleteTodoByUserId(FindUser(email))

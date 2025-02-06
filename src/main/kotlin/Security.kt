@@ -16,6 +16,7 @@ import java.sql.DriverManager
 
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
+    // TODO: Read config variables from config file, don't hardcode values
     val jwtAudience = "jwt-audience"
     val jwtDomain = "https://jwt-provider-domain/"
     val jwtRealm = "ktor sample app"
