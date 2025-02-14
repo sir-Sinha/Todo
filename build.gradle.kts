@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.kotlin.kapt)
+
 }
 
 group = "com.example"
@@ -14,9 +16,16 @@ application {
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
+kapt {
+    correctErrorTypes = true
+}
+
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
+    google()
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
 dependencies {
@@ -56,5 +65,10 @@ dependencies {
 
     // For handling serialization with JSON (Optional, for testing purposes)
     testImplementation("io.ktor:ktor-server-tests:2.2.3")
+    implementation("redis.clients:jedis:5.1.0")
+
+    implementation("com.google.dagger:dagger:2.48")
+    kapt("com.google.dagger:dagger-compiler:2.48")
+
 
 }
