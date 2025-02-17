@@ -10,7 +10,8 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.contentnegotiation.*
 import kotlinx.serialization.json.Json
 import io.ktor.server.netty.*
-
+import DI.*
+import DI.Components.DaggerAppComponent
 
 
 fun main(args: Array<String>) {
@@ -21,6 +22,11 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    val appComponent = DaggerAppComponent.create()
+    appComponent.inject(this)
+
+
+
 
     install(ContentNegotiation) {
         json(Json {
@@ -32,7 +38,8 @@ fun Application.module() {
     DatabaseFactory.init()
     Client.jedis
 
+
     configureSerialization()
     configureSecurity()
-    configureRouting()
+    configureRouting(appComponent)
 }

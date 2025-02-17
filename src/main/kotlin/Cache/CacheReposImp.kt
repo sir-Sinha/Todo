@@ -1,8 +1,9 @@
 package Cache
 
 import Client
+import javax.inject.Inject
 
-class CacheReposImp : CacheRepos {
+class CacheReposImp @Inject constructor() : CacheRepos {
     override fun get(key: String): String? {
         return Client.jedis.get(key)
     }
