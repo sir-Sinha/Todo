@@ -57,7 +57,7 @@ fun Route.UserRoutes(userObject: UserRepos){
                 userObject.Check(input.email, input.password)
                 val res = userObject.update(input.email, name , password)
 
-                if (res) call.respond(HttpStatusCode.OK, JsonSuccess("Successfully Updated!"))
+                if (res) call.respond(HttpStatusCode.OK , JsonSuccess("Successfully Updated!"))
                 else call.respond(HttpStatusCode.Forbidden, JsonSuccess("You have updated nothing."))
 
 
